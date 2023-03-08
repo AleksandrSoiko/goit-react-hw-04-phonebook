@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Input, Label, Span } from './FilterContacts.styled';
+
 export const Filter = ({ value, OnFilterChange }) => {
   return (
     <Label>

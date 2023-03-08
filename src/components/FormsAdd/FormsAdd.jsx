@@ -1,9 +1,6 @@
 import { Formik, Field } from 'formik';
-import { Component } from 'react';
 import { Form, FormField, SubmitBtn, ErrorMessage } from './FormsAdd.styled';
-import { nanoid } from 'nanoid';
 import * as Yup from 'yup';
-import capitalize from 'lodash.capitalize';
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
@@ -18,41 +15,32 @@ const ContactSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export class ContactForm extends Component {
-  state = {
-    name: '',
-    number: '',
-  };
-
-  handleSubmit = (values, action) => {
-    this.props.onSubmit(values);
-    action.resetForm();
-  };
-
-  render() {
-    const fields = Object.keys(this.state);
-    return (
-      <Formik
-        initialValues={{
-          name: '',
-          number: '',
-        }}
-        validationSchema={ContactSchema}
-        onSubmit={this.handleSubmit}
-      >
-        <Form>
-          {fields.map(item => {
-            return (
-              <FormField key={nanoid()}>
-                {capitalize(item)}
-                <Field name={item}></Field>
-                <ErrorMessage name={item} component="span" />
-              </FormField>
-            );
-          })}
-          <SubmitBtn type="submit">Add contact</SubmitBtn>
-        </Form>
-      </Formik>
-    );
-  }
-}
+export const ContactForm = props => {
+  return (
+    <Formik
+      initialValues={{
+        name: '',
+        number: '',
+      }}
+      validationSchema={ContactSchema}
+      onSubmit={(values, action) => {
+        props.onSubmit(values);
+        action.resetForm();
+      }}
+    >
+      <Form>
+        <FormField>
+          Name
+          <Field name="name"></Field>
+          <ErrorMessage name="name" component="span" />
+        </FormField>
+        <FormField>
+          Number
+          <Field name="number"></Field>
+          <ErrorMessage name="number" component="span" />
+        </FormField>
+        <SubmitBtn type="submit">Add contact</SubmitBtn>
+      </Form>
+    </Formik>
+  );
+};
