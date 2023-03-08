@@ -31,7 +31,6 @@ export const App = () => {
   };
 
   const onSubmit = data => {
-    console.log(data);
     const equalName = contacts.find(
       el => el.name.toLowerCase() === data.name.toLowerCase()
     );
